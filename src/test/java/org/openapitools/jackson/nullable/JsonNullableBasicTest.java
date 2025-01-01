@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonNullableBasicTest extends ModuleTestBase {
+import static org.junit.jupiter.api.Assertions.*;
 
+public class JsonNullableBasicTest extends ModuleTestBase {
     public static final class JsonNullableData {
         public JsonNullable<String> myString;
     }
@@ -58,6 +60,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
 
     private final ObjectMapper MAPPER = mapperWithModule();
 
+    @Test
     public void testJsonNullableTypeResolution() throws Exception {
         // With 2.6, we need to recognize it as ReferenceType
         JavaType t = MAPPER.constructType(JsonNullable.class);
@@ -66,6 +69,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertTrue(t.isReferenceType());
     }
 
+    @Test
     public void testDeserAbsent() throws Exception {
         JsonNullable<?> value = MAPPER.readValue("null",
                 new TypeReference<JsonNullable<String>>() {
@@ -73,6 +77,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertNull(value.get());
     }
 
+    @Test
     public void testDeserSimpleString() throws Exception {
         JsonNullable<?> value = MAPPER.readValue("\"simpleString\"",
                 new TypeReference<JsonNullable<String>>() {
@@ -81,6 +86,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("simpleString", value.get());
     }
 
+    @Test
     public void testDeserInsideObject() throws Exception {
         JsonNullableData data = MAPPER.readValue("{\"myString\":\"simpleString\"}",
                 JsonNullableData.class);
@@ -88,6 +94,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("simpleString", data.myString.get());
     }
 
+    @Test
     public void testDeserComplexObject() throws Exception {
         TypeReference<JsonNullable<JsonNullableData>> type = new TypeReference<JsonNullable<JsonNullableData>>() {
         };
@@ -98,6 +105,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("simpleString", data.get().myString.get());
     }
 
+    @Test
     public void testDeserGeneric() throws Exception {
         TypeReference<JsonNullable<JsonNullableGenericData<String>>> type = new TypeReference<JsonNullable<JsonNullableGenericData<String>>>() {
         };
@@ -108,16 +116,19 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("simpleString", data.get().myData.get());
     }
 
+    @Test
     public void testSerAbsent() throws Exception {
         String value = MAPPER.writeValueAsString(JsonNullable.undefined());
         assertEquals("null", value);
     }
 
+    @Test
     public void testSerSimpleString() throws Exception {
         String value = MAPPER.writeValueAsString(JsonNullable.of("simpleString"));
         assertEquals("\"simpleString\"", value);
     }
 
+    @Test
     public void testSerInsideObject() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = JsonNullable.of("simpleString");
@@ -125,6 +136,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{\"myString\":\"simpleString\"}", value);
     }
 
+    @Test
     public void testSerComplexObject() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = JsonNullable.of("simpleString");
@@ -132,6 +144,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{\"myString\":\"simpleString\"}", value);
     }
 
+    @Test
     public void testSerGeneric() throws Exception {
         JsonNullableGenericData<String> data = new JsonNullableGenericData<String>();
         data.myData = JsonNullable.of("simpleString");
@@ -139,6 +152,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{\"myData\":\"simpleString\"}", value);
     }
 
+    @Test
     public void testSerOptDefault() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = JsonNullable.undefined();
@@ -147,6 +161,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{}", value);
     }
 
+    @Test
     public void testSerOptNull() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = null;
@@ -155,6 +170,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{}", value);
     }
 
+    @Test
     public void testSerOptNullNulled() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = JsonNullable.of(null);
@@ -163,6 +179,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{\"myString\":null}", value);
     }
 
+    @Test
     public void testSerOptAbsent() throws Exception {
         final JsonNullableData data = new JsonNullableData();
         data.myString = JsonNullable.undefined();
@@ -183,6 +200,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{}", mapper.writeValueAsString(data));
     }
 
+    @Test
     public void testSerOptAbsentNull() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = JsonNullable.of(null);
@@ -191,6 +209,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{\"myString\":null}", value);
     }
 
+    @Test
     public void testSerOptNonEmpty() throws Exception {
         JsonNullableData data = new JsonNullableData();
         data.myString = null;
@@ -199,6 +218,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals("{}", value);
     }
 
+    @Test
     public void testWithTypingEnabled() throws Exception {
         final ObjectMapper objectMapper = mapperWithModule();
         // ENABLE TYPING
@@ -214,6 +234,7 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertEquals(myData.myString, deserializedMyData.myString);
     }
 
+    @Test
     public void testObjectId() throws Exception {
         final Unit input = new Unit();
         input.link(input);
@@ -226,10 +247,9 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         assertSame(result, base);
     }
 
+    @Test
     public void testJsonNullableCollection() throws Exception {
-
-        TypeReference<List<JsonNullable<String>>> typeReference = new TypeReference<List<JsonNullable<String>>>() {
-        };
+        TypeReference<List<JsonNullable<String>>> typeReference = new TypeReference<>() {};
 
         List<JsonNullable<String>> list = new ArrayList<JsonNullable<String>>();
         list.add(JsonNullable.of("2014-1-22"));
@@ -242,19 +262,21 @@ public class JsonNullableBasicTest extends ModuleTestBase {
         List<JsonNullable<String>> result = MAPPER.readValue(str, typeReference);
         assertEquals(list.size(), result.size());
         for (int i = 0; i < list.size(); ++i) {
-            assertEquals("Entry #" + i, list.get(i), result.get(i));
+            assertEquals(list.get(i), result.get(i));
         }
     }
 
+    @Test
     public void testDeserNull() throws Exception {
         JsonNullable<?> value = MAPPER.readValue("\"\"", new TypeReference<JsonNullable<Integer>>() {});
         assertFalse(value.isPresent());
     }
 
+    @Test
     public void testPolymorphic() throws Exception
     {
         final Container dto = new Container();
-        dto.contained = JsonNullable.of((Contained) new ContainedImpl());
+        dto.contained = JsonNullable.of(new ContainedImpl());
 
         final String json = MAPPER.writeValueAsString(dto);
 

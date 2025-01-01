@@ -6,9 +6,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestJsonNullableWithPolymorphic extends ModuleTestBase
 {
@@ -69,6 +73,7 @@ public class TestJsonNullableWithPolymorphic extends ModuleTestBase
 
     final ObjectMapper MAPPER = mapperWithModule();
 
+    @Test
     public void testJsonNullableMapsFoo() throws Exception {
 
         Map<String, Object> foo = new LinkedHashMap<String, Object>();
@@ -82,6 +87,7 @@ public class TestJsonNullableWithPolymorphic extends ModuleTestBase
         _test(MAPPER, foo);
     }
 
+    @Test
     public void testJsonNullableMapsBar() throws Exception {
 
         Map<String, Object> bar = new LinkedHashMap<String, Object>();
@@ -95,6 +101,7 @@ public class TestJsonNullableWithPolymorphic extends ModuleTestBase
         _test(MAPPER, bar);
     }
 
+    @Test
     public void testJsonNullableMapsBaz() throws Exception {
         Map<String, Object> baz = new LinkedHashMap<String, Object>();
         Map<String, Object> loop = new LinkedHashMap<String, Object>();
@@ -107,6 +114,7 @@ public class TestJsonNullableWithPolymorphic extends ModuleTestBase
         _test(MAPPER, baz);
     }
 
+    @Test
     public void testJsonNullableWithTypeAnnotation13() throws Exception
     {
         AbstractJsonNullable result = MAPPER.readValue("{\"value\" : 5}",

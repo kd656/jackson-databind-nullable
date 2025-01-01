@@ -28,11 +28,6 @@ public class JsonNullableModule extends Module {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return this == o;
-    }
-
-    @Override
     public String getModuleName() {
         return NAME;
     }

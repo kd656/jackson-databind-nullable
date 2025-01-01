@@ -1,5 +1,6 @@
 package org.openapitools.jackson.nullable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -7,6 +8,7 @@ import java.util.function.Consumer;
 
 public class JsonNullable<T> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final JsonNullable<?> UNDEFINED = new JsonNullable<>(null, false);
@@ -90,11 +92,10 @@ public class JsonNullable<T> implements Serializable {
             return true;
         }
 
-        if (!(obj instanceof JsonNullable)) {
+        if (!(obj instanceof JsonNullable<?> other)) {
             return false;
         }
 
-        JsonNullable<?> other = (JsonNullable<?>) obj;
         return Objects.equals(value, other.value) &&
                 isPresent == other.isPresent;
     }

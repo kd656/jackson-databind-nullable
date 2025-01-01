@@ -3,10 +3,12 @@ package org.openapitools.jackson.nullable;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 // TODO: fix JsonNullable in constructor annotated by JsonCreator
-@Ignore("JsonNullable in a constructor is dederialized to JsonNullable[null] instead of JsonNullable.undefined")
+@Disabled("JsonNullable in a constructor is dederialized to JsonNullable[null] instead of JsonNullable.undefined")
 public class CreatorTest extends ModuleTestBase
 {
     static class CreatorWithJsonNullableStrings

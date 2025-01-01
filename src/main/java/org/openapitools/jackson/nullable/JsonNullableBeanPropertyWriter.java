@@ -6,8 +6,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
+import java.io.Serial;
+
 public class JsonNullableBeanPropertyWriter extends BeanPropertyWriter
 {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected JsonNullableBeanPropertyWriter(BeanPropertyWriter base) {

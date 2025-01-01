@@ -1,4 +1,7 @@
-package org.openapitools.jackson.nullable;
+package org.openapitools.jackson.nullable.javax.validation;
+
+import org.openapitools.jackson.nullable.JsonNullable;
+import org.openapitools.jackson.nullable.JsonNullableValueExtractorHelper;
 
 import javax.validation.valueextraction.ExtractedValue;
 import javax.validation.valueextraction.UnwrapByDefault;

@@ -4,21 +4,21 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public final class JsonNullableSimpleTest {
 
     private ObjectMapper mapper;
 
-    @Before
+    @BeforeEach
     public void setup() {
         mapper = new ObjectMapper();
         mapper.registerModule(new JsonNullableModule());
@@ -65,20 +65,22 @@ public final class JsonNullableSimpleTest {
         });
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void ifPresentWithNullValuePresent() {
         JsonNullable<String> test = JsonNullable.of(null);
-        test.ifPresent(string -> {
+
+        assertThrows(RuntimeException.class, () -> test.ifPresent(string -> {
             throw new RuntimeException();
-        });
+        }));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void ifPresentWithNonNullValuePresent() {
         JsonNullable<String> test = JsonNullable.of("test");
-        test.ifPresent(string -> {
+
+        assertThrows(RuntimeException.class, () -> test.ifPresent(string -> {
             throw new RuntimeException();
-        });
+        }));
     }
 
     @Test

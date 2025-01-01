@@ -8,8 +8,7 @@ import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 
 import java.util.List;
 
-public class JsonNullableBeanSerializerModifier  extends BeanSerializerModifier
-{
+public class JsonNullableBeanSerializerModifier  extends BeanSerializerModifier {
     @Override
     public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
                                                      BeanDescription beanDesc,

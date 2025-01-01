@@ -1,8 +1,10 @@
-package org.openapitools.jackson.nullable;
+package org.openapitools.jackson.nullable.jakarta;
 
 import jakarta.validation.valueextraction.ExtractedValue;
 import jakarta.validation.valueextraction.UnwrapByDefault;
 import jakarta.validation.valueextraction.ValueExtractor;
+import org.openapitools.jackson.nullable.JsonNullable;
+import org.openapitools.jackson.nullable.JsonNullableValueExtractorHelper;
 
 /**
  * Extractor for JsonNullable (modern jakarta-validation version)

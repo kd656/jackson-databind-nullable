@@ -7,8 +7,11 @@ import com.fasterxml.jackson.databind.ser.std.ReferenceTypeSerializer;
 import com.fasterxml.jackson.databind.type.ReferenceType;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
+import java.io.Serial;
+
 public class JsonNullableSerializer extends ReferenceTypeSerializer<JsonNullable<?>> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /*
